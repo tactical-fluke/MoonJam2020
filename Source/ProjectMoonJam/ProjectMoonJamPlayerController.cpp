@@ -85,6 +85,7 @@ void AProjectMoonJamPlayerController::SetNewMoveDestination(const FVector DestLo
 		if ((Distance > 120.0f))
 		{
 			UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, DestLocation);
+			bMovingToPoint = true;
 		}
 	}
 }
@@ -96,6 +97,11 @@ void AProjectMoonJamPlayerController::MoveRight(float Modifier)
 	{
 		const FVector Right(0, 1, 0);
 		ControlledPawn->AddMovementInput(Right, Modifier);
+		if(Modifier != 0.f && bMovingToPoint)
+		{
+			UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, ControlledPawn->GetActorLocation());
+			bMovingToPoint = false;
+		}
 	}
 }
 
@@ -106,6 +112,11 @@ void AProjectMoonJamPlayerController::MoveForward(float Modifier)
 	{
 		const FVector Forward(1, 0, 0);
 		ControlledPawn->AddMovementInput(Forward, Modifier);
+		if(Modifier != 0.f && bMovingToPoint)
+		{
+			UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, ControlledPawn->GetActorLocation());
+			bMovingToPoint = false;
+		}
 	}
 }
 
