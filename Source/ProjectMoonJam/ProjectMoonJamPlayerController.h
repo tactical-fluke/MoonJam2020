@@ -29,6 +29,10 @@ protected:
 	/** Navigate player to the current mouse cursor location. */
 	void MoveToMouseCursor();
 
+	/** Move the controlled pawn around using the keyboard */
+	void MoveRight(float Modifier);
+	void MoveForward(float Modifier);
+
 	/** Navigate player to the current touch location. */
 	void MoveToTouchLocation(const ETouchIndex::Type FingerIndex, const FVector Location);
 	

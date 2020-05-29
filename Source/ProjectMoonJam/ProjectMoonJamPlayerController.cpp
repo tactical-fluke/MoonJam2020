@@ -36,6 +36,9 @@ void AProjectMoonJamPlayerController::SetupInputComponent()
 	InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &AProjectMoonJamPlayerController::MoveToTouchLocation);
 	InputComponent->BindTouch(EInputEvent::IE_Repeat, this, &AProjectMoonJamPlayerController::MoveToTouchLocation);
 
+	InputComponent->BindAxis("MoveForward", this, &AProjectMoonJamPlayerController::MoveForward);
+	InputComponent->BindAxis("MoveRight", this, &AProjectMoonJamPlayerController::MoveRight);
+
 	InputComponent->BindAction("ResetVR", IE_Pressed, this, &AProjectMoonJamPlayerController::OnResetVR);
 }
 
@@ -46,27 +49,14 @@ void AProjectMoonJamPlayerController::OnResetVR()
 
 void AProjectMoonJamPlayerController::MoveToMouseCursor()
 {
-	if (UHeadMountedDisplayFunctionLibrary::IsHeadMountedDisplayEnabled())
-	{
-		if (AProjectMoonJamCharacter* MyPawn = Cast<AProjectMoonJamCharacter>(GetPawn()))
-		{
-			if (MyPawn->GetCursorToWorld())
-			{
-				UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, MyPawn->GetCursorToWorld()->GetComponentLocation());
-			}
-		}
-	}
-	else
-	{
-		// Trace to see what is under the mouse cursor
-		FHitResult Hit;
-		GetHitResultUnderCursor(ECC_Visibility, false, Hit);
+	// Trace to see what is under the mouse cursor
+	FHitResult Hit;
+	GetHitResultUnderCursor(ECC_Visibility, false, Hit);
 
-		if (Hit.bBlockingHit)
-		{
-			// We hit something, move there
-			SetNewMoveDestination(Hit.ImpactPoint);
-		}
+	if (Hit.bBlockingHit)
+	{
+		// We hit something, move there
+		SetNewMoveDestination(Hit.ImpactPoint);
 	}
 }
 
@@ -98,6 +88,28 @@ void AProjectMoonJamPlayerController::SetNewMoveDestination(const FVector DestLo
 		}
 	}
 }
+
+void AProjectMoonJamPlayerController::MoveRight(float Modifier)
+{
+	APawn* ControlledPawn = GetPawn();
+	if(ControlledPawn)
+	{
+		const FVector Right(0, 1, 0);
+		ControlledPawn->AddMovementInput(Right, Modifier);
+	}
+}
+
+void AProjectMoonJamPlayerController::MoveForward(float Modifier)
+{
+	APawn* ControlledPawn = GetPawn();
+	if(ControlledPawn)
+	{
+		const FVector Forward(1, 0, 0);
+		ControlledPawn->AddMovementInput(Forward, Modifier);
+	}
+}
+
+
 
 void AProjectMoonJamPlayerController::OnSetDestinationPressed()
 {
