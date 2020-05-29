@@ -109,8 +109,6 @@ void AProjectMoonJamPlayerController::MoveForward(float Modifier)
 	}
 }
 
-
-
 void AProjectMoonJamPlayerController::OnSetDestinationPressed()
 {
 	// set flag to keep updating destination until released
