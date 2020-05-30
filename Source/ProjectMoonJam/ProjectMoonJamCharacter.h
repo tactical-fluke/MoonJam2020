@@ -24,6 +24,21 @@ public:
 	/** Returns CursorToWorld subobject **/
 	FORCEINLINE class UDecalComponent* GetCursorToWorld() { return CursorToWorld; }
 
+	UFUNCTION(BluePrintCallable, Category=Energy)
+	float GetCurrentEnergy() const { return CurrentEnergy; }
+	UFUNCTION(BluePrintCallable, Category=Energy)
+	void SetCurrentEnergy(float NewValue) { CurrentEnergy = FMath::Clamp(NewValue, 0.f, MaxEnergy); }
+	UFUNCTION(BluePrintCallable, Category=Energy)
+	void AddEnergy(float AdditionalEnergy) { SetCurrentEnergy(CurrentEnergy + AdditionalEnergy); }
+
+	UFUNCTION(BluePrintCallable, Category=Energy)
+	float GetMaxEnergy() const { return MaxEnergy; }
+
+	UFUNCTION(BluePrintCallable, Category=Energy)
+	float GetEnergyLossPerSecond() const { return EnergyLossPerSecond; }
+	UFUNCTION(BluePrintCallable, Category=Energy)
+	void SetEnergyLossPerSecond(float NewValue) { EnergyLossPerSecond = NewValue; }
+
 protected:
 
 	//maximum energy for the character
@@ -50,5 +65,7 @@ private:
 	/** A decal that projects to the cursor location. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UDecalComponent* CursorToWorld;
+
+	bool bShouldRefreshEnergy = true;
 };
 
