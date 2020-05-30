@@ -24,6 +24,20 @@ public:
 	/** Returns CursorToWorld subobject **/
 	FORCEINLINE class UDecalComponent* GetCursorToWorld() { return CursorToWorld; }
 
+protected:
+
+	//maximum energy for the character
+	UPROPERTY(EditAnywhere, Category=Energy)
+	float MaxEnergy;
+
+	//current energy held
+	UPROPERTY(BlueprintReadWrite, Category=Energy)
+	float CurrentEnergy;
+
+	//energy lost per second
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Energy)
+	float EnergyLossPerSecond;
+	
 private:
 	/** Top down camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))

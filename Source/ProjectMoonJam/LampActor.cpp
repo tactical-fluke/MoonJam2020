@@ -15,15 +15,11 @@ ALampActor::ALampActor()
 void ALampActor::BeginPlay()
 {
 	Super::BeginPlay();
-
-	RemainingPower = MaxPower;
 }
 
 // Called every frame
 void ALampActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	RemainingPower -= PowerLostPerSec * DeltaTime;
 }
 

@@ -55,6 +55,8 @@ AProjectMoonJamCharacter::AProjectMoonJamCharacter()
 	// Activate ticking in order to update the cursor every frame.
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
+
+	CurrentEnergy = MaxEnergy;
 }
 
 void AProjectMoonJamCharacter::Tick(float DeltaSeconds)
@@ -87,4 +89,5 @@ void AProjectMoonJamCharacter::Tick(float DeltaSeconds)
 			CursorToWorld->SetWorldRotation(CursorR);
 		}
 	}
+	CurrentEnergy -= EnergyLossPerSecond * DeltaSeconds;
 }
