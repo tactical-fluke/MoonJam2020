@@ -63,6 +63,12 @@ void AProjectMoonJamCharacter::Tick(float DeltaSeconds)
 {
     Super::Tick(DeltaSeconds);
 
+	if (bShouldRefreshEnergy)
+	{
+		CurrentEnergy = MaxEnergy;
+		bShouldRefreshEnergy = false;
+	}
+
 	if (CursorToWorld != nullptr)
 	{
 		if (UHeadMountedDisplayFunctionLibrary::IsHeadMountedDisplayEnabled())
