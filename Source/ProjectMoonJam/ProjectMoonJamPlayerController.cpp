@@ -5,6 +5,7 @@
 #include "Runtime/Engine/Classes/Components/DecalComponent.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "ProjectMoonJamCharacter.h"
+#include "Clickable.h"
 #include "Engine/World.h"
 
 AProjectMoonJamPlayerController::AProjectMoonJamPlayerController()
@@ -76,18 +77,6 @@ void AProjectMoonJamPlayerController::MoveToTouchLocation(const ETouchIndex::Typ
 
 void AProjectMoonJamPlayerController::SetNewMoveDestination(const FVector DestLocation)
 {
-	APawn* const MyPawn = GetPawn();
-	if (MyPawn)
-	{
-		float const Distance = FVector::Dist(DestLocation, MyPawn->GetActorLocation());
-
-		// We need to issue move command only if far enough in order for walk animation to play correctly
-		if ((Distance > 120.0f))
-		{
-			UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, DestLocation);
-			bMovingToPoint = true;
-		}
-	}
 }
 
 void AProjectMoonJamPlayerController::MoveRight(float Modifier)
@@ -97,11 +86,6 @@ void AProjectMoonJamPlayerController::MoveRight(float Modifier)
 	{
 		const FVector Right(0, 1, 0);
 		ControlledPawn->AddMovementInput(Right, Modifier);
-		if(Modifier != 0.f && bMovingToPoint)
-		{
-			UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, ControlledPawn->GetActorLocation());
-			bMovingToPoint = false;
-		}
 	}
 }
 
@@ -112,22 +96,27 @@ void AProjectMoonJamPlayerController::MoveForward(float Modifier)
 	{
 		const FVector Forward(1, 0, 0);
 		ControlledPawn->AddMovementInput(Forward, Modifier);
-		if(Modifier != 0.f && bMovingToPoint)
-		{
-			UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, ControlledPawn->GetActorLocation());
-			bMovingToPoint = false;
-		}
 	}
 }
 
 void AProjectMoonJamPlayerController::OnSetDestinationPressed()
 {
-	// set flag to keep updating destination until released
-	bMoveToMouseCursor = true;
+
+	FHitResult Hit;
+	GetHitResultUnderCursor(ECC_Visibility, false, Hit);
+
+	if (Hit.bBlockingHit)
+	{
+		// We hit something, move there
+		SetNewMoveDestination(Hit.ImpactPoint);
+		if (Hit.Actor->GetClass()->ImplementsInterface(UClickable::StaticClass()))
+		{
+			IClickable* obj = Cast<IClickable>(Hit.Actor);
+			obj->OnClick();
+		}
+	}
 }
 
 void AProjectMoonJamPlayerController::OnSetDestinationReleased()
 {
-	// clear flag to indicate we should stop updating the destination
-	bMoveToMouseCursor = false;
 }
