@@ -4,20 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Triggerable.h"
-#include "GenericTriggerable.generated.h"
+#include "HanoiBlock.generated.h"
 
 UCLASS()
-class PROJECTMOONJAM_API AGenericTriggerable : public AActor
+class PROJECTMOONJAM_API AHanoiBlock : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AGenericTriggerable();
-
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, category = trigger)
-	void Trigger();
+	AHanoiBlock();
 
 protected:
 	// Called when the game starts or when spawned

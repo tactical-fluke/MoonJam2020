@@ -4,24 +4,29 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Triggerable.h"
-#include "GenericTriggerable.generated.h"
+#include "Clickable.h"
+#include "GenericClickable.generated.h"
 
 UCLASS()
-class PROJECTMOONJAM_API AGenericTriggerable : public AActor
+class PROJECTMOONJAM_API AGenericClickable : public AActor, public IClickable
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AGenericTriggerable();
+	AGenericClickable();
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, category = trigger)
-	void Trigger();
+	void OnClick() override
+	{
+		OnClickBP();
+	}
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, category = click)
+	void OnClickBP();
 
 public:	
 	// Called every frame
