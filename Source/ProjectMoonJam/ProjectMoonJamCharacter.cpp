@@ -95,5 +95,6 @@ void AProjectMoonJamCharacter::Tick(float DeltaSeconds)
 			CursorToWorld->SetWorldRotation(CursorR);
 		}
 	}
-	CurrentEnergy -= EnergyLossPerSecond * DeltaSeconds;
+	float energyLost = EnergyLossPerSecond * DeltaSeconds;
+	CurrentEnergy = FMath::Clamp(CurrentEnergy - energyLost, 0.f, MaxEnergy);
 }

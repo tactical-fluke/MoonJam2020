@@ -120,3 +120,8 @@ void AProjectMoonJamPlayerController::OnSetDestinationPressed()
 void AProjectMoonJamPlayerController::OnSetDestinationReleased()
 {
 }
+
+void AProjectMoonJamPlayerController::OnPlayerDeath()
+{
+	DisableInput(this);
+}
