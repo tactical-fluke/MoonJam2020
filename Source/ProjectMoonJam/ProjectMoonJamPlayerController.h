@@ -14,6 +14,9 @@ class AProjectMoonJamPlayerController : public APlayerController
 public:
 	AProjectMoonJamPlayerController();
 
+	UFUNCTION(BlueprintCallable, category = death)
+	void OnPlayerDeath();
+
 protected:
 	/** True if the controlled character should navigate to the mouse cursor. */
 	uint32 bMoveToMouseCursor : 1;
