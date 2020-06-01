@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "HanoiTower.h"
+#include "GenericClickable.h"
 
 // Sets default values
-AHanoiTower::AHanoiTower()
+AGenericClickable::AGenericClickable()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -12,30 +12,21 @@ AHanoiTower::AHanoiTower()
 }
 
 // Called when the game starts or when spawned
-void AHanoiTower::BeginPlay()
+void AGenericClickable::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
 // Called every frame
-void AHanoiTower::Tick(float DeltaTime)
+void AGenericClickable::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
 
-void AHanoiTower::OnClickBP_Implementation()
+void AGenericClickable::OnClickBP_Implementation()
 {
 
 }
 
-void AHanoiTower::AddBlock_Implementation(AActor* block)
-{
-
-}
-
-AActor* AHanoiTower::GetTopBlock_Implementation()
-{
-	return nullptr;
-}

@@ -16,8 +16,8 @@ public:
 	// Sets default values for this actor's properties
 	AGenericTriggerable();
 
-	UFUNCTION(BlueprintNativeEvent, category = trigger)
-		void Trigger();
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, category = trigger)
+	void Trigger();
 
 protected:
 	// Called when the game starts or when spawned
