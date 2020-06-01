@@ -5,10 +5,12 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "BooleanOutputBase.h"
+#include "Clickable.h"
+#include "GenericTriggerable.h"
 #include "BooleanActorBase.generated.h"
 
 UCLASS()
-class PROJECTMOONJAM_API ABooleanActorBase : public AActor
+class PROJECTMOONJAM_API ABooleanActorBase : public AActor, public IClickable
 {
 	GENERATED_BODY()
 	
@@ -24,6 +26,11 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BluePrintCallable, Category = Output)
 	void OnInputChanged(bool newValue);
 
+	void OnClick() override
+	{
+		OnInteraction();
+	}
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -36,6 +43,15 @@ protected:
 
 	UPROPERTY(EditAnywhere, BluePrintReadOnly, Category = Output)
 	ABooleanActorBase* output;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, category = triggers)
+	TArray<AGenericTriggerable*> triggers;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = Interaction)
+	void OnInteraction();
+
+	UFUNCTION(BlueprintCallable, Category=triggers)
+	void TriggerAll();
 
 public:	
 	// Called every frame

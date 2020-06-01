@@ -34,3 +34,16 @@ void ABooleanActorBase::OnInputChanged_Implementation(bool NewValue)
 {
 
 }
+
+void ABooleanActorBase::OnInteraction_Implementation()
+{
+
+}
+
+void ABooleanActorBase::TriggerAll()
+{
+	for (auto& trigger : triggers)
+	{
+		trigger->Trigger();
+	}
+}
